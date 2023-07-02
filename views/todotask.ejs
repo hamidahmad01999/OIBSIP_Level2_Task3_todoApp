@@ -1,0 +1,63 @@
+<%- include('components/header')-%>
+<body>
+    <%- include('components/navbar')-%>
+    
+    <section class="task_img"
+    <% if(task.image){%>
+        style="background: url(<%= task.image%>);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;"
+    <%}else{%>
+        style="background: url(/img/task.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;"
+    <%}%>
+    >
+        <% if(!task.image){%>
+            <div class="task_img_text">
+                This task does not has image.
+            </div>
+        <%}%>
+
+    </section>
+
+    <!-- --------------------------------------------------- -->
+    <!-- TASK DESCRIPTION -->
+
+    <section class="task_desc">
+        <div class="container">
+            <div class="row">
+                <%if(task.title){%>
+                    <h3 style="display: inline;">Title:</h3>
+                    <div class="task_title task_item ">
+                        <h3 style="display: inline;"><%= task.title%></h3>
+                    </div>
+                <%}%>
+                <%if(task.description){%>
+                    <h3 style="display: inline;">Description:</h3>
+                    <div class="task_desc task_item">
+                        <p style="display: inline;"><%= task.description%></p>
+                    </div>
+                <%}%>
+                <%if(task.createdAt){%>
+                    <h5 style="display: inline;">Posted At:</h5>
+                    <div class="task_created task_item">
+                        <small><%= task.createdAt%></small>
+                    </div>
+                <%}%>
+                <div class="task_btn">
+                    <button class="btn btn-primary my-2"><a href="/todo" style="text-decoration: none; color: white;">Back</a></button>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <%- include('components/footer')-%>
+</body>
+</html>

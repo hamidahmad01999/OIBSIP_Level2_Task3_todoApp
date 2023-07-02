@@ -1,0 +1,210 @@
+<%- include('components/header')-%>
+
+    <body style="background: url(/img/banner_3.jpg); background-color: rgb(51, 50, 50);background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <%- include('components/navbar')-%>
+            <section class="main_user">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-4 user_info">
+                            <div class="row user_info_cont">
+                                <div class="col-sm-6 user_info_commn user_info_1">
+                                    <h5 style="text-align: center;"><b>User information</b></h5>
+                                    <% if(name!=""){%>
+                                        <div class="user_info_1_data"
+                                            style="width: 100%; display: flex; justify-content: center; margin: 0px; padding:0px;">
+                                            <p style="text-align: center;">Name: <b>
+                                                    <%= locals.name%>
+                                                </b></p>
+
+                                        </div>
+                                        <%}%>
+                                </div>
+                                <% if(image){%>
+                                    <div class="col-sm-6 user_img user_info_commn" style="width: 200px; height: 200px;;
+                            padding: 10px;">
+                                        <img style="width: 100%; height: 100%; border-radius: 50%;; margin-bottom: -10px; border: 4px solid rgb(74, 74, 151);"
+                                            src="<%= locals.image%>" alt="">
+
+                                    </div>
+                                    <%}%>
+                            </div>
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-sm-8" >
+                            <div class="container">
+                                <div class="row add_todo">
+                                    <div class="col-sm-12 col-md-9  col-lg-6 "
+                                        >
+                                        <div class="todo_form">
+                                            <form action="/todo" method="post" enctype="multipart/form-data">
+                                                <div class="todo_form_head">
+                                                    <h4 style="color: white; text-align: center;">
+                                                        Add your Task in todo List.
+                                                    </h4>
+                                                </div>
+                                                <% if(id!=""){%>
+                                                    <div class="todo_form_item" style="display: none;">
+                                                        <label for="user_id">User_id:</label>
+                                                        <input type="text" id="user_id" name="user_id"
+                                                            value="<%= locals.id%>">
+                                                    </div>
+                                                <%}%>
+                                                <div class="todo_form_item">
+                                                    <label for="title">Title:</label>
+                                                    <input type="text" id="title" name="title"
+                                                        placeholder="Enter title of task!">
+                                                </div>
+                                                <div class="todo_form_item">
+                                                    <label for="description">Description:</label>
+                                                    <textarea name="description" id="description" placeholder="Enter description of task."></textarea>
+                                                    
+                                                </div>
+                                                <div class="todo_form_item">
+                                                    <label for="image">Image:</label>
+                                                    <input type="file" id="image" name="image"
+                                                        placeholder="Upload your Image">
+                                                </div>
+                                                <div class="todo_form_item">
+                                                    <label for="important">Important Task:</label>
+                                                    <select id="important" name="important">
+                                                        <option value="yes">Yes</option>
+                                                        <option value="no" selected>No</option>
+                                                    </select>
+                                                </div>
+                                                <div class="todo_form_item">
+                                                    <label for="date">Date for Task:</label>
+                                                    <input type="date" id="date" name="taskdate"
+                                                        placeholder="Upload your date">
+                                                </div>
+                                                <div class="todo_form_buttons">
+                                                    <button type="submit">Add Task</button>
+                                                    <button type="Reset">Reset</button>
+                                                </div>
+                                                <div class="todo_form_data">
+                                                    <%if(data !=""){%>
+                                                        <p style="color: white; font-size: 14px; text-align: center;"><%= locals.data%></p>
+                                                    <%}%>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2nd Section for showing the list of todo tasks -->
+            <section class="todo_list">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4" >
+                            <div class="todo_list_imp" style="display: flex; flex-direction: column;align-items: center;">
+                                <h4 style="text-align: center; color: white;">Important Tasks to do</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td style="color: white;border-right: none;border-top-left-radius: 7px;border-bottom-left-radius: 7px; font-weight: bold;">No</td>
+                                            <td style="color: white;border-right: none;border-left: none; font-weight: bold;">Title</td>
+                                            <td style="color: white; border-left: none;border-top-right-radius: 7px;border-bottom-right-radius: 7px; font-weight: bold;">Date</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(important!=""){%>
+                                            <%for(var i=0; i<important.length; i++){%>
+                                                
+                                                <tr>
+                                                    <td style="color: white; border-right: none; border-top-left-radius: 7px;border-bottom-left-radius: 7px;"><%=i+1%></td>
+                                                    <%if(important[i].title.length>10){%>
+                                                        <td style="color: white; border-right: none;border-left: none;"><%= important[i].title.slice(0,10)%>...</td>
+                                                    <%}else{%>
+                                                        <td style="color: white;border-right: none;border-left: none;"><%= important[i].title.slice(0,10)%></td>
+                                                    <%}%>
+                                                    <td style="color: white;border-left: none;border-top-right-radius: 7px;border-bottom-right-radius: 7px;"><%= alltasks[i].taskdate%></td>
+                                                </tr>
+                                            <%}%>
+                                        <%}%>
+                                                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-lg-9 todo_list_maintab" style="border: 2px solid rgb(132, 3, 110); ">
+                            <div class="todo_list_maintab_cont">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td>No:</td>
+                                            <td>Title</td>
+                                            <td>Task Date</td>
+                                            <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(alltasks!=""){%>
+                                            <%for(var i=0; i<alltasks.length; i++){%>
+                                                    <tr>
+                                                        
+                                                        <td style="color: white;"><%= i+1%></td>
+                                                        <%if(alltasks[i].title.length>13){%>
+                                                            <td style="color: white;"><%= alltasks[i].title.slice(0,13)%>...</td>
+                                                        <%}else{%>
+                                                            <td style="color: white;"><%= alltasks[i].title.slice(0,13)%></td>
+                                                        <%}%>
+                                                        <td style="color: white;"><%= alltasks[i].taskdate%></td>
+                                                        <%if(alltasks[i].description.length>31){%>
+                                                            <td style="color: white; "><%= alltasks[i].description.slice(0,30)%>... <p style="margin: 0px; float: right;"> <a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href="/todotask/<%= alltasks[i]._id%>"><span>Preview</span><i class="fa-solid fa-info"></i></a><a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href=""><span>Edit</span><i class="fa-solid fa-pen-to-square"></i><a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href="/deletetodo/<%= alltasks[i]._id%>"><span>Delete</span><i class="fa-solid fa-trash"></i></a><a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href="/task/completed/<%=alltasks[i].id%>"><span>Completed</span><i class="fa-solid fa-check"></i></p></td>
+                                                        <%}else{%>
+                                                            <td style="color: white; "><%= alltasks[i].description.slice(0,30)%> <p style="margin: 0px; float: right;"> <a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href="/todotask/<%= alltasks[i]._id%>"><span>Preview</span><i class="fa-solid fa-info"></i></a><a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href=""><span>Edit</span><i class="fa-solid fa-pen-to-square"></i><a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href="/deletetodo/<%= alltasks[i]._id%>"><span>Delete</span><i class="fa-solid fa-trash"></i></a><a style="margin-left: 10px; text-decoration: none; color: white;" class="icon" href="/task/completed/<%=alltasks[i].id%>"><span>Completed</span><i class="fa-solid fa-check"></i></p></td>
+                                                        <%}%>
+                                                    </tr>
+                                            <%}%>
+                                        <%}else{%>
+                                            <tr style="color: white;"><td></td><td>There is no task right now.</td></tr>
+                                        <%}%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-5 col-xl-4 comp_task_cont">
+                            <div class="comp_task_table">
+                                <h4 style="color: white;">Completed Task</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td style="padding-left:5px; color: white;border-right: none;border-top-left-radius: 7px;border-bottom-left-radius: 7px; font-weight: bold;">No</td>
+                                            <td style="color: white;border-right: none;border-left: none; font-weight: bold;">Title</td>
+                                            <td style="color: white; border-left: none;border-top-right-radius: 7px;border-bottom-right-radius: 7px; font-weight: bold;">Date</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(task_data_comp!=""){%>
+                                            <%var x=1 %>
+                                            <%for(var i=0; i<task_data_comp.length; i++){%>
+                                                <tr style="padding: 2px 15px; cursor: pointer;" onclick="window.location.href='/todotask/<%=task_data_comp[i].id%>';">
+                                                   
+                                                        <td style=" padding-left:5px;color: white; border-right: none; border-top-left-radius: 7px;border-bottom-left-radius: 7px;"><%= x%></td>
+                                                        <%if(task_data_comp[i].title.length>10){%>
+                                                            <td style="color: white; border-right: none;border-left: none;"><%= task_data_comp[i].title.slice(0,10)%>...</td>
+                                                        <%}else{%>
+                                                            <td style="color: white;border-right: none;border-left: none;"><%= task_data_comp[i].title.slice(0,10)%></td>
+                                                        <%}%>
+                                                        <td style="display: flex; justify-content: space-between; ; color: white;border-left: none;border-top-right-radius: 7px;border-bottom-right-radius: 7px;"><%= task_data_comp[i].taskdate%><a style="padding-right: 20px; text-decoration: none; color: white;" class="icon" href="/deletetodo/<%= task_data_comp[i]._id%>"><span>Delete</span><i class="fa-solid fa-trash"></i></a></td>
+                                               
+                                                </tr>
+                                        <%}%>
+                                        <%}else{%>
+                                                    <tr style="color: white; "><td style="">There is no task right now.</td></tr>
+                                        <%}%>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <%- include('components/footer')-%>
+    </body>
+
+    </html>

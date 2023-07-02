@@ -1,0 +1,38 @@
+<%- include('components/header')-%>
+
+<body>
+    <%- include('components/navbar')-%>
+        <section class="signup_main">
+            <div class="container">
+                <div class="row signup_cont">
+                    <div class="col-xl-4 signup_data">
+                        <div class="form">
+                            <form action="signin" method="POST" enctype="multipart/form-data">
+                                <div class="form_item">
+                                    <input type="email" name="email" id="email" placeholder="Enter your email!">
+                                </div>                               
+                                <div class="form_item">
+                                    <input type="password" name="password" id="password" placeholder="Enter your password!">
+                                </div> 
+                                <div class="form_buttons">
+                                    <button type="submit">SIGN IN</button>
+                                    <button type="reset">Reset</button>
+                                </div>  
+                                <div class="form_text">
+                                    <p><a href="">Don't have a account??</a></p>
+                                </div>
+                                <%if(data!=""){%>
+                                    <div class="form_text_data form_text_1">
+                                        <p><%= locals.data%></p>
+                                    </div> 
+                                <%}%>                      
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>    
+
+        <%- include('components/footer')-%>
+</body>
+</html>
