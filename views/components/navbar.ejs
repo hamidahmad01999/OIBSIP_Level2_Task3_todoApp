@@ -1,5 +1,5 @@
 <nav>
-    <div class="container">
+    <div class="container actual_navbar">
         <div class="navbar main_navbar">
             <div class="left">
                 <div class="web_logo">
@@ -11,8 +11,8 @@
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/todo">Todo List</a></li>
-                        <li><a href="">About Me</a></li>
-                        <li><a href="">Contact</a></li>
+                        <li><a href="/signin">Sign In</a></li>
+                        <li><a href="/signup">Sign Up</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,16 +29,65 @@
                                 color: white;
                                 font-weight: bold;
                                 transition: 1s;
-                                "
-                                
-                                >Log Out</button>
+                                ">Log Out</button>
                             </form>
 
                         </div>
-                        
-                    <%}%>
+
+                        <%}%>
                 </div>
             </div>
         </div>
     </div>
+    <div class="side_nav">
+        <div class="side_nav_container">
+            <div class="left">
+                <div class="web_logo">
+                    <img src="/img/logo.jpg" alt="">
+                </div>
+            </div>
+            <div class="mid">
+                <div class=" sidnav_menu">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/todo">Todo List</a></li>
+                        <li><a href="/signin">Sign In</a></li>
+                        <li><a href="/signup">Sign Up</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <div class="menu_btn">
+                    <button><a href="/signin">Sign In</a></button>
+                    <button><a href="/signup">Sign Up</a></button>
+                    <%if(locals.todo){%>
+                        <div class="todo_nav_btn_cont" style="display: inline;">
+                            <form action="/logout" method="get" enctype="multipart/form-data" class="todo_nav_btn" style="display: inline;">
+                                <button type="submit" style="background: #003eac;
+                                margin-left: 7px;
+                                border-radius: 7px;
+                                color: white;
+                                font-weight: bold;
+                                transition: 1s;
+                                ">Log Out</button>
+                            </form>
+
+                        </div>
+
+                        <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="side_nav_btns">
+        <div class="menu side_nav_btn" id="menu_btn"><img src="/img/menu.png" alt=""></div>
+    </div>
 </nav>
+
+<script>
+    var menu_btn = document.getElementById('menu_btn');
+
+    menu_btn.onclick = function() {
+        alert("menu")
+    }
+</script>
