@@ -49,9 +49,19 @@ const validatemiddlewaresignup = async(req, res, next) => {
 // this middleware is for signin page to check wether using is entering his email or password
 const validatemiddlewaresignin = async(req, res, next) => {
     if (req.body.email == "" || req.body.password == "") {
-        req.flash('message', "Please enter your email and password")
+        req.flash('signin_message', "Please enter your email and password")
         return res.redirect('/signin')
     }
+    next();
+}
+
+// this middleware is for checking whether user entering date while entering data for todo task in todo page
+const validatedateandnametod = async(req, res, next) => {
+    if (req.body.taskdate == "" || req.body.title == "") {
+        req.flash('todo_message', "It is must to add task tittle and date")
+        return res.redirect('/todo')
+    }
+    next();
 }
 
 
@@ -272,7 +282,7 @@ app.get('/signin', (req, res) => {
     res.render('signin', { signin_message })
 })
 
-app.post('/signin', async(req, res) => {
+app.post('/signin', validatemiddlewaresignin, async(req, res) => {
     let { email, password } = req.body;
     console.log(email, password)
     let check_user = await user.findOne({ email: email, verified: true })
@@ -311,6 +321,8 @@ app.get('/todo', isAuth, async(req, res) => {
     console.log(task_data_comp)
     let task_data_important = await task.find({ user_id: _id, important: "yes", completed: false });
     console.log(task_data)
+    let todo_message = req.flash().todo_message || ""
+
     res.render('todo', {
         todo: true,
         name: name,
@@ -320,12 +332,13 @@ app.get('/todo', isAuth, async(req, res) => {
         data: "",
         alltasks: task_data,
         important: task_data_important,
-        task_data_comp: task_data_comp
+        task_data_comp: task_data_comp,
+        todo_message: todo_message
     })
 })
 
 // I created a middle ware (validatemiddlewaretodo) for todo page to check whether user uploading image or not but I think we don't need this so that's why I am not using that middleware here.
-app.post('/todo', isAuth, async(req, res) => {
+app.post('/todo', isAuth, validatedateandnametod, async(req, res) => {
 
     let task_data = await task.find({});
     let { name, email, _id } = req.user;
@@ -351,8 +364,9 @@ app.post('/todo', isAuth, async(req, res) => {
                         })
                         // res.status(303).render('todo', {name:name, image:user_image, email:"email", id:_id,todo:true,
                         // data:"Task added successfully", alltasks:task_data})
-                    return res.redirect('/dumy')
-                        // res.redirect('/todo')
+                        // return res.redirect('/dumy')
+                    req.flash('todo_message', "Task added successfully")
+                    res.redirect('/todo')
                 }
             )
         } else {
@@ -360,7 +374,8 @@ app.post('/todo', isAuth, async(req, res) => {
                 // return res.render('todo', {
                 //     todo:true, name:name, email:email, image:image, id:_id, data:"Please upload image with JPG, PNG and JPEG.",alltasks:task_data, important:task_data_important
                 // })
-            return res.redirect('/dumy')
+            req.flash('todo_message', "Please upload image with JPG, PNG and JPEG.")
+            return res.redirect('/todo')
         }
     } else {
         console.log("In error")
@@ -372,7 +387,8 @@ app.post('/todo', isAuth, async(req, res) => {
             taskdate: taskdate,
             completed: false
         })
-        res.redirect('/todo')
+        req.flash('todo_message', "Task added successfully")
+        return res.redirect('/todo')
     }
 })
 
