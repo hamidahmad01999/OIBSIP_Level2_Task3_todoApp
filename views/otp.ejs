@@ -1,40 +1,50 @@
 <%- include('components/header')-%>
-<body>
-    <%- include('components/navbar')-%>
-    <section class="otp">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 otp_cont">
-                    <p>Please enter your otp here to verify your account.</p>
-                    <form action="/otp" method="post" style="display: inline;">
-                        <div class="otp_form_item">
-                            <input type="text" class="form-control" name="otp" placeholder="Enter your otp!">
-                        </div>
-                        <div class="">
-                            <button class="btn btn-primary my-2"  type="submit" >
+
+    <body>
+        <%- include('components/navbar')-%>
+            <section class="otp">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 otp_cont">
+                            <p>
+                                <% if(!email==""){%>
+                                    Your OTP is send to
+                                    <b>
+                                    <%= locals.email%></b>.
+                                    <%}%>
+                                        Please enter your otp here to verify your account.</p>
+                            <form action="/otp" method="post" style="display: inline;">
+                                <div class="otp_form_item">
+                                    <input type="text" class="form-control" name="otp" placeholder="Enter your otp!">
+                                </div>
+                                <div class="">
+                                    <button class="btn btn-primary my-2" type="submit">
                                 Verify Account
                             </button>
-                        </div>
-                    </form>
-                    <form action="/resendotp" style="display: inline;">
-                        <button class="btn btn-primary my-2"  type="submit" >
+                                </div>
+                            </form>
+                            <form action="/resendotp" style="display: inline;">
+                                <button class="btn btn-primary my-2" type="submit">
                             Resed OTP
                         </button>
-                    </form>
-                    <div style="border: 1px solid black;">
+                            </form>
+                            <div style="border: 1px solid black;">
 
-                        <%if(messages!=""){%>
-                            <div class="form_text_data form_text_1">
-                                <p style="color: black;"><%= locals.messages%></p>
-                            </div> 
-                        <%}%>  
+                                <%if(messages!=""){%>
+                                    <div class="form_text_data form_text_1">
+                                        <p style="color: black;">
+                                            <%= locals.messages%>
+                                        </p>
+                                    </div>
+                                    <%}%>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </div>
-    </section>
-    
-    <%- include('components/footer')-%>
-</body>
-</html>
+            <%- include('components/footer')-%>
+    </body>
+
+    </html>
