@@ -276,7 +276,9 @@ app.get('/todo', isAuth, async(req, res) => {
     // actually I am getting name,email, image, _id from req.user which actually I am getting from isAuth middleware function
     let { name, email, image, _id } = req.user;
     let task_data = await task.find({ user_id: _id, completed: false });
+    console.log(task_data)
     let task_data_comp = await task.find({ user_id: _id, completed: true });
+    console.log(task_data_comp)
     let task_data_important = await task.find({ user_id: _id, important: "yes", completed: false });
     console.log(task_data)
     res.render('todo', {
@@ -338,8 +340,9 @@ app.post('/todo', isAuth, async(req, res) => {
             description: description,
             important: important,
             taskdate: taskdate,
+            completed: false
         })
-        res.redirect('/dumy')
+        res.redirect('/todo')
     }
 })
 

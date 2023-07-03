@@ -46,12 +46,14 @@ nav {
 .side_nav {
     width: 250px;
     position: absolute;
-    right: 0px;
+    /* right: 0px; */
     top: 0px;
     height: 100vh;
     z-index: 10;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
+    transition: 1s;
+    display: none;
 }
 
 .side_nav_container {
@@ -139,18 +141,41 @@ nav {
     left: 10px;
 }
 
+.side_nav_btns {
+    position: relative;
+}
+
 .side_nav_btn {
     width: 50px;
-    position: absolute;
+    position: fixed;
     top: 10px;
-    right: 20px;
-    z-index: 20;
+    right: 70px;
+    /* z-index: 100; */
     display: block;
 }
 
 .side_nav_btn img {
     width: 100%;
     cursor: pointer;
+    transition: 1s;
+}
+
+.menu {
+    filter: brightness(0);
+    padding: 4px;
+    border: 2px solid white;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0, 0.5);
+    z-index: 12;
+}
+
+.close {
+    display: none;
+    z-index: 13;
+}
+
+#close_btn {
+    width: 50px;
 }
 
 .web_logo {
@@ -560,6 +585,14 @@ nav {
 .footer_left {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer_left h3 {
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
 }
 
 .footer .main_menu ul {
@@ -611,6 +644,35 @@ nav {
 
 .footer_right_icons a {
     text-decoration: none;
+    color: white;
+}
+
+.about_txt {
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+
+.about p {
+    display: block;
+    color: white;
+    font-size: 16px;
+    text-align: justify;
+    width: 80%;
+    margin: 0px auto;
+}
+
+.copyright {
+    background: black;
+    margin: 0px;
+}
+
+.copyright_txt {
+    margin: 0px;
+    text-align: center;
     color: white;
 }
 
@@ -1022,9 +1084,12 @@ table {
 }
 
 @media screen and (min-width:1000px) {
-    /* .side_nav {
+    .side_nav_btns {
         display: none;
-    } */
+    }
+    .side_nav {
+        display: none;
+    }
     .web_logo_mobile {
         display: none;
     }
@@ -1043,6 +1108,15 @@ table {
 }
 
 @media screen and (max-width:580px) {
+    .about {
+        margin: 15px 0 10px;
+    }
+    .about p {
+        width: 95%;
+    }
+    body {
+        overflow-x: hidden;
+    }
     .side_nav {
         width: 100%;
     }

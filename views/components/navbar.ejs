@@ -80,14 +80,31 @@
         </div>
     </div>
     <div class="side_nav_btns">
-        <div class="menu side_nav_btn" id="menu_btn"><img src="/img/menu.png" alt=""></div>
+        <div class="menu side_nav_btn" id="menu_btn"><img src=" /img/menu.png " alt=" "></div>
+        <div class="close side_nav_btn " id="close_btn "><img src="/img/close.png" alt=""></div>
     </div>
 </nav>
 
+
 <script>
     var menu_btn = document.getElementById('menu_btn');
+    var close_btn = document.getElementById('close_btn');
+    var side_nav = document.querySelector('.side_nav')
+    var my_close_btn = document.querySelector('.close')
+
+
 
     menu_btn.onclick = function() {
-        alert("menu")
+        console.log("it's clicked")
+        menu_btn.style.display = "none";
+        side_nav.style.display = "block"
+        my_close_btn.style.display = "block"
+        my_close_btn.style.filter = "brightness(100)"
+    }
+
+    my_close_btn.onclick = function() {
+        my_close_btn.style.display = "none"
+        menu_btn.style.display = "block";
+        side_nav.style.display = "none"
     }
 </script>
