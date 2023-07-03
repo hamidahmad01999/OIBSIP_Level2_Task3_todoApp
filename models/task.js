@@ -1,38 +1,38 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 let today = new Date();
-today=toString(today.setHours(0, 0, 0, 0));
+today = toString(today.setHours(0, 0, 0, 0));
 console.log(typeof(today))
 
-const taskSchema= new Schema({
-    user_id:{
-        type:String,
-        required:true,
+const taskSchema = new Schema({
+    user_id: {
+        type: String,
+        required: true,
     },
-    title:{
-        type:String,
-        required:true,
+    title: {
+        type: String,
+        required: true,
     },
-    description:{
-        type:String,
-        required:false,
+    description: {
+        type: String,
+        required: false,
     },
-    
-    image:{
-        type:String,
-        required:false
+
+    image: {
+        type: String,
+        required: false
     },
-    important:{
-        type:String,
+    important: {
+        type: String,
     },
-    taskdate:{
-        type:String,
+    taskdate: {
+        type: String,
         // default: today,
     },
-    completed:{
-        type:Boolean
+    completed: {
+        type: Boolean
     }
-},{timestamps:true})
+}, { timestamps: true })
 
-module.exports =mongoose.model('tasks', taskSchema)
+module.exports = mongoose.model('tasks', taskSchema)

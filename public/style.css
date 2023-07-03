@@ -1056,7 +1056,67 @@ table {
     height: 70vh;
 }
 
+
+/* ------------------------------------------------------------------------- */
+
+
+/* Aboutme */
+
+.aboutme {
+    min-height: 90vh;
+    margin-bottom: 50px;
+}
+
+.aboutme_data_cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aboutme_data {
+    margin-top: 70px;
+    /* border: 2px solid black; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;
+}
+
+.aboutme_data p {
+    text-align: justify;
+}
+
+.my_image {
+    width: 100%;
+    padding: 10% auto;
+    display: flex;
+    justify-content: center;
+}
+
+.my_image img {
+    margin-top: 70px;
+    padding: 10% auto;
+    width: 70%;
+    display: block;
+    border-radius: 10%;
+    transition: 1s;
+    box-shadow: 0 0 30px rgba(42, 103, 226, 0.5);
+}
+
+.my_image img:hover {
+    transform: rotate(360deg);
+    width: 77%;
+}
+
 @media screen and (max-width:1000px) {
+    .my_image img:hover {
+        transform: none;
+        padding-bottom: 20px;
+    }
     .todo_list_maintab {
         width: 95%;
         margin-top: 20px;
@@ -1108,6 +1168,9 @@ table {
 }
 
 @media screen and (max-width:580px) {
+    .my_image img {
+        width: 95%;
+    }
     .about {
         margin: 15px 0 10px;
     }

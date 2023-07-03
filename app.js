@@ -265,14 +265,14 @@ app.get('/otp', otp_auth, async(req, res) => {
 })
 app.post("/otp", async(req, res) => {
     let myotp = req.body.otp;
-    console.log(`this is  my ${myotp}`)
+    console.log(`this is  my ${myotp} and ${typeof(myotp)}`)
     console.log(userid)
     let getuser = await otpmodel.find({ userId: userid })
-    let otp = getuser[0].otp;
-    let { expiresAt } = getuser
-    console.log(`this is require ${otp, expiresAt}`)
+    let realotp = getuser[0].otp;
+    let { otp, expiresAt } = getuser
+    console.log(`this is require ${otp, expiresAt} and ${typeof(otpe)} and ${typeof(expiresAt)}`)
     console.log(getuser)
-    console.log(`this is real otp ${otp}`)
+    console.log(`this is real otp ${realotp}`)
     if (!myotp) {
         req.flash('message', "Please enter OTP to verify.")
         console.log("!otp")
@@ -291,7 +291,7 @@ app.post("/otp", async(req, res) => {
                 return res.redirect("/signup")
 
             } else {
-                if (otp == myotp) {
+                if (realotp == myotp) {
                     console.log("OTP MAtched")
                         // let realuser= await user.findByIdAndUpdate({_Id:userid}, {verified:true});
                     let realuser = await user.findById(userid);
@@ -356,12 +356,11 @@ app.post('/signin', validatemiddlewaresignin, async(req, res) => {
             });
             return res.redirect('/todo')
         } else {
-            // return res.render('signin', { data: "You entered incorrect credentials." })
             req.flash('signin_message', "You entered incorrect credentials")
             return res.redirect('/signin')
         }
     } else {
-        // res.render('signin', { data: "You entered incorrect credentials or not verified." })
+
         req.flash('signin_message', "User does not exist or not verified.")
         return res.redirect('/signin')
     }
@@ -429,9 +428,7 @@ app.post('/todo', isAuth, validatedateandnametod, async(req, res) => {
             )
         } else {
             console.log("In else")
-                // return res.render('todo', {
-                //     todo:true, name:name, email:email, image:image, id:_id, data:"Please upload image with JPG, PNG and JPEG.",alltasks:task_data, important:task_data_important
-                // })
+
             req.flash('todo_message', "Please upload image with JPG, PNG and JPEG.")
             return res.redirect('/todo')
         }
@@ -455,42 +452,62 @@ app.get('/dumy', isAuth, async(req, res) => {
 })
 
 app.get('/logout', async(req, res) => {
-    res.cookie('token', null, {
-        httpOnly: true,
-        expires: new Date(Date.now())
-    })
-    res.redirect('/signin')
+    try {
+        res.cookie('token', null, {
+            httpOnly: true,
+            expires: new Date(Date.now())
+        })
+        res.redirect('/signin')
+    } catch (error) {
+        return redirect("/todo")
+    }
+
 })
 
 app.get('/deletetodo/:id', async(req, res) => {
-    let id = req.params.id
+    try {
+        let id = req.params.id
 
-    await task.findByIdAndDelete(id)
-    res.redirect('/todo')
+        await task.findByIdAndDelete(id)
+        res.redirect('/todo')
+    } catch (error) {
+        return res.redirect('/todo')
+    }
 })
 
 app.get('/todotask/:id', async(req, res) => {
-    let id = req.params.id;
+    try {
+        let id = req.params.id;
 
-    let todotask = await task.findById(id)
-    console.log(todotask);
-    res.render('todotask', { todo: true, task: todotask })
+        let todotask = await task.findById(id)
+        console.log(todotask);
+        res.render('todotask', { todo: true, task: todotask })
+    } catch (error) {
+        return res.redirect('/todo')
+    }
 
 })
 
 // Here in this function actually I am updating task, if I completed any task so it will go to another section of todo page.
 app.get('/task/completed/:id', async(req, res) => {
-    let my_comp_task_id = req.params.id;
-    // let my_comp_task=await task.findById(my_comp_task_id);
-    let my_comp_task = await task.findByIdAndUpdate(my_comp_task_id, { completed: true });
-    console.log(my_comp_task)
+    try {
+        let my_comp_task_id = req.params.id;
+        // let my_comp_task=await task.findById(my_comp_task_id);
+        let my_comp_task = await task.findByIdAndUpdate(my_comp_task_id, { completed: true });
+        console.log(my_comp_task)
 
-    let my_comp_task1 = await task.findById(my_comp_task_id)
-        // console.log(my_comp)
-    res.redirect('/todo')
+        let my_comp_task1 = await task.findById(my_comp_task_id)
+            // console.log(my_comp)
+        res.redirect('/todo')
+    } catch (error) {
+        return res.redirect('/todo')
+    }
 })
 
-
+// route for about me
+app.get('/aboutme', (req, res) => {
+    res.render('aboutme')
+})
 
 
 app.listen(port, () => {
