@@ -115,26 +115,3 @@
     </body>
 
     </html>
-
-    <script>
-        var menu_btn = document.getElementById('menu_btn');
-        var close_btn = document.getElementById('close_btn');
-        var side_nav = document.querySelector('.side_nav')
-        var my_close_btn = document.querySelector('.close')
-
-
-
-        menu_btn.onclick = function() {
-            console.log("it's clicked")
-            menu_btn.style.display = "none";
-            side_nav.style.display = "block"
-            my_close_btn.style.display = "block"
-            my_close_btn.style.filter = "brightness(100)"
-        }
-
-        my_close_btn.onclick = function() {
-            my_close_btn.style.display = "none"
-            menu_btn.style.display = "block";
-            side_nav.style.display = "none"
-        }
-    </script>
