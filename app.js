@@ -249,19 +249,25 @@ sendotpverification = async({ _id, email }, res) => {
 }
 
 app.get('/otp', otp_auth, async(req, res) => {
-    userid = req.cookies.userid;
-    console.log(`type of cookie is ${req.cookie}`)
-    jwt_otp_compare = await jwt.verify(userid, "otp secret")
+    try {
+        userid = req.cookies.userid;
+        console.log(`type of cookie is ${req.cookie}`)
+        jwt_otp_compare = await jwt.verify(userid, "otp secret")
 
-    userid = jwt_otp_compare.id;
-    let useremail = await otpmodel.find({ userId: userid })
-    useremail = useremail[0].email || "not available";
-    // userid=req.query.id || "";
-    console.log(`this is get user id ${userid}`);
-    let messages = req.flash().message || "";
-    let email = req.flash().email || "";
-    res.render('otp', { messages, email: useremail })
-    console.log(messages)
+        userid = jwt_otp_compare.id;
+        let useremail = await otpmodel.find({ userId: userid })
+        useremail = useremail[0].email || "not available";
+        // userid=req.query.id || "";
+        console.log(`this is get user id ${userid}`);
+        let messages = req.flash().message || "";
+        let email = req.flash().email || "";
+        res.render('otp', { messages, email: useremail })
+        console.log(messages)
+    } catch (e) {
+        req.flash('message', "Internal Server Error.")
+        res.redirect('/signup')
+    }
+
 })
 app.post("/otp", async(req, res) => {
     let myotp = req.body.otp;
